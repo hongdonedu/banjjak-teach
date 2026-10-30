@@ -164,6 +164,7 @@ h1,h2,h3{margin:0;font-weight:400}
 .reason img.em{width:44px;height:44px;object-fit:contain}
 .reason .tx{flex:1;min-width:0}
 .reason.on{background:rgba(255,216,77,.16);border-color:var(--yellow);box-shadow:0 0 0 3px rgba(255,216,77,.2)}
+.reason.flash{animation:pop .4s}
 .reason.on::after{content:"✔";color:var(--yellow);font-size:26px}
 .tag{flex:none;font-size:14px;border-radius:999px;padding:3px 10px;color:#08132a;background:var(--obs);white-space:nowrap}
 .tag.EXP{background:var(--exp)}.tag.AUTH{background:var(--auth)}.tag.GUESS{background:var(--guess)}
@@ -275,3 +276,113 @@ h1,h2,h3{margin:0;font-weight:400}
 }
 @media (hover:none) and (pointer:coarse){.btn.sm{padding:10px 16px}}
 @media print{#bg,#sparks,#toast,.side,.noprint{display:none!important}.shell{display:block}body{background:#fff;color:#000}}
+
+/* ===================== 반짝이 실험실(시뮬레이터) ===================== */
+.simwrap{padding:16px}
+.sim{display:flex;flex-direction:column;gap:12px}
+.simbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
+.simh{font-size:21px;margin:6px 0 0}
+.simsay{background:var(--paper);color:var(--paper-ink);border-radius:18px;padding:12px 16px;font-size:20px;line-height:1.45;border-left:8px solid var(--cyan)}
+.simsay.ok{border-left-color:var(--mint);background:#e9fff6}
+.simsay.hmm{border-left-color:var(--orange);background:#fff4e6}
+.simsay b{font-weight:400;color:#c2410c}
+.btn.on{outline:3px solid #fff;outline-offset:2px}
+/* 미션 2 */
+.scene2{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;min-height:250px}
+.zone{position:relative;display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.zone.sun{background:radial-gradient(circle at 70% 18%,#fff6b0 0,#ffd75e 32%,#ffb94a 100%)}
+.zone.shade{background:linear-gradient(180deg,#5c7a96,#3d5a75)}
+.zl{position:absolute;left:12px;top:10px;font-size:20px;background:rgba(255,255,255,.85);color:#222;border-radius:999px;padding:2px 12px}
+.sunimg{position:absolute;right:10px;top:6px;width:84px;animation:float 3.6s ease-in-out infinite}
+.tree{position:absolute;right:12px;top:6px;font-size:64px}
+.plate{position:relative;width:170px;height:110px;display:flex;align-items:flex-end;justify-content:center}
+.plate::after{content:"";position:absolute;bottom:0;left:0;right:0;height:22px;border-radius:50%;background:#f4f4f4;box-shadow:inset 0 -5px 0 #d6d6d6}
+.pud{position:absolute;bottom:6px;width:150px;height:16px;border-radius:50%;background:rgba(120,200,255,.75);transform-origin:center;transition:transform 1.2s;z-index:1}
+.ice{position:relative;z-index:2;width:78px;height:78px;margin-bottom:12px;border-radius:14px;background:linear-gradient(135deg,#ffffff 0,#cdeeff 45%,#8fd2ff 100%);box-shadow:inset 0 0 0 3px rgba(255,255,255,.8),0 6px 16px rgba(0,60,120,.25);transform-origin:bottom center;transition:transform 1.2s}
+.clock{font-size:22px;background:rgba(255,255,255,.1);border-radius:999px;padding:6px 16px}
+.clock b{font-weight:400;color:var(--yellow);font-size:28px}
+.papers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.paper{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:18px;font-size:18px;line-height:1.25;border:3px solid transparent}
+.paper span{font-size:40px;line-height:1}
+.paper.black{background:linear-gradient(180deg,#ffe28a,#ffc94a);color:#3b2600}
+.paper.white{background:linear-gradient(180deg,#fff2b8,#ffdf80);color:#3b2600}
+.paper.shd{background:linear-gradient(180deg,#9fb6cc,#6f8aa5);color:#0d1b2a}
+.paper.on{border-color:#fff;box-shadow:0 0 0 4px rgba(255,216,77,.5)}
+.thermo{display:flex;align-items:center;gap:14px;justify-content:center}
+.tbar{width:30px;height:120px;border-radius:16px;background:#fff;position:relative;overflow:hidden;border:3px solid #ddd}
+.tbar i{position:absolute;left:0;right:0;bottom:0;height:10%;background:#5fb8ff;transition:height .8s,background .8s}
+.tsay{font-size:21px;max-width:420px}
+/* 미션 3 */
+.scene3{position:relative;height:320px;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#9be2ff 0,#d8f4ff 62%,#8fd36b 62%,#6bbf4a 100%)}
+.pin{position:absolute;left:50%;top:22px;width:190px;margin-left:-95px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25))}
+.winds{position:absolute;inset:0;pointer-events:none;transition:opacity .4s}
+.winds i{position:absolute;left:-30%;height:4px;width:40%;border-radius:4px;background:linear-gradient(90deg,transparent,#fff,transparent);animation:gust var(--wd,1.4s) linear infinite}
+.winds i:nth-child(1){top:22%}.winds i:nth-child(2){top:34%;animation-delay:.3s}.winds i:nth-child(3){top:46%;animation-delay:.6s}.winds i:nth-child(4){top:58%;animation-delay:.15s}.winds i:nth-child(5){top:70%;animation-delay:.45s}
+@keyframes gust{to{left:110%}}
+.scraps{position:absolute;left:0;right:0;bottom:16px;height:40px}
+.scrap{position:absolute;bottom:0;width:14px;height:9px;border-radius:2px;transition:transform .5s}
+.scraps.fly .scrap{animation:flutter calc(1.8s - var(--fly,0) * .35s) ease-in-out infinite}
+.scraps.fly .scrap:nth-child(2n){animation-delay:.2s}.scraps.fly .scrap:nth-child(3n){animation-delay:.4s}
+@keyframes flutter{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(calc(var(--fly,1) * 26px),calc(var(--fly,1) * -30px)) rotate(160deg)}100%{transform:translate(calc(var(--fly,1) * 40px),0) rotate(360deg)}}
+.speed{position:absolute;right:12px;top:12px;background:rgba(255,255,255,.9);color:#222;border-radius:14px;padding:6px 10px;font-size:15px;width:150px}
+.sbar{height:12px;border-radius:6px;background:#e5e5e5;overflow:hidden;margin-top:4px}
+.sbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4fd1a5,#ffd84d,#ff5d73)}
+/* 미션 4 */
+.scene4{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:linear-gradient(180deg,#f7eedd,#e9dcc2);border-radius:20px;padding:18px;color:#222}
+.tv{width:230px;background:#2b2b2b;border-radius:18px;padding:12px 12px 6px;box-shadow:0 10px 20px rgba(0,0,0,.25)}
+.scr{height:130px;border-radius:10px;background:linear-gradient(135deg,#6fe3ff,#b7a4ff,#ff8ad8);display:flex;align-items:center;justify-content:center;font-size:52px;transition:background .3s}
+.scr .show{animation:float 1.2s ease-in-out infinite}
+.tv.off .scr{background:#0c0c0c}.tv.off .scr .show{display:none}
+.tvfoot{height:26px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px}
+.led{width:12px;height:12px;border-radius:50%;background:#444;border:0;padding:0}
+.tv.standby .led{background:#ff2d2d;box-shadow:0 0 10px 3px rgba(255,45,45,.8);animation:blink 1.6s infinite}
+.led.found{outline:3px solid #ffd84d;outline-offset:4px}
+@keyframes blink{50%{opacity:.55}}
+.cord{width:46px;height:8px;border-radius:4px;background:#333}
+.meter{width:170px;background:#fff;border-radius:16px;padding:10px;text-align:center;border:4px solid #4fa8ff;position:relative}
+.mlab{font-size:15px;color:#2463b8}
+.mnum{font-family:'Black Han Sans','Jua',monospace;font-size:58px;line-height:1.1;color:#0b0f2e;background:#d9f7c8;border-radius:10px;margin:4px 0}
+.mnum.zero{background:#eee;color:#888}
+.munit{font-size:14px;color:#555}
+.mplug{position:absolute;left:-34px;top:50%;margin-top:-20px;font-size:32px;cursor:pointer;transition:transform .3s}
+.mplug.out{transform:translateX(-30px) rotate(-30deg);opacity:.8}
+.wall{width:64px;height:90px;border-radius:12px;background:#fff;border:3px solid #ccc;display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px;color:#666}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tally div{background:rgba(255,255,255,.08);border-radius:14px;padding:8px;text-align:center;font-size:16px}
+.tally span{display:block}
+.tally b{font-weight:400;font-size:34px;color:var(--yellow)}
+/* 미션 5 */
+.cards5{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card5{display:flex;flex-direction:column;align-items:center;padding:12px 4px;border-radius:18px;background:#fffdf4;color:#1f1a3d;font-size:18px;border:3px solid #ffd84d}
+.card5 span{font-size:44px;line-height:1.1}
+.card5:disabled{opacity:.3}
+.path5{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.path5 .slot{width:96px;height:96px;border-radius:18px;border:3px dashed rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px;color:var(--muted);font-weight:400}
+.path5 .slot.full{border-style:solid;border-color:var(--yellow);background:rgba(255,216,77,.12);color:#fff;font-size:40px}
+.path5 .slot small{font-size:13px;color:var(--ink2)}
+.path5 i{font-style:normal;font-size:24px;color:var(--muted)}
+.path5.flow i{color:var(--yellow);animation:blink .6s infinite}
+.path5.flow .slot.full{box-shadow:0 0 18px rgba(255,216,77,.7)}
+.village{display:grid;grid-template-columns:auto 60px 1fr auto;align-items:end;gap:10px;background:linear-gradient(180deg,#bfe8ff,#e9f8ff);border-radius:20px;padding:16px;min-height:170px;color:#222}
+.plant5{position:relative;text-align:center;padding-top:60px;min-width:120px}
+.plant5 .pe{font-size:56px;display:block}
+.plant5 .pl{font-size:15px}
+.smoke{position:absolute;left:28px;top:0;width:80px;height:60px}
+.smoke i{position:absolute;bottom:0;width:26px;height:26px;border-radius:50%;background:rgba(90,90,90,.75);animation:puff 2.4s var(--d,0s) ease-out infinite}
+@keyframes puff{0%{transform:translateY(0) scale(.6);opacity:.9}100%{transform:translateY(-50px) scale(1.6);opacity:0}}
+.wire5{height:6px;border-radius:3px;background:repeating-linear-gradient(90deg,#333 0 10px,#ffd84d 10px 16px);margin-bottom:40px}
+.houses{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.hs{position:relative;font-size:40px;line-height:1}
+.hs i{position:absolute;left:50%;top:-6px;margin-left:-8px;font-size:16px;font-style:normal;opacity:.15}
+.hs.lit i{opacity:1;filter:drop-shadow(0 0 6px #ffd84d)}
+.earth5{text-align:center}
+.earth5 img{width:80px}
+.earth5 span{font-size:30px}
+@media (max-width:560px){
+  .scene2{grid-template-columns:1fr}
+  .papers,.tally{grid-template-columns:1fr}
+  .cards5{grid-template-columns:repeat(2,1fr)}
+  .village{grid-template-columns:1fr}
+  .wire5{display:none}
+  .path5 .slot{width:72px;height:72px}
+}

@@ -175,8 +175,10 @@ function step() {
       '<button class="btn p" data-act="pred" data-v="틀릴 것 같아"><span class="em">❌</span>틀릴 것 같아</button>' +
       '<button class="btn l" data-act="pred" data-v="잘 모르겠어"><span class="em">🤔</span>잘 모르겠어</button></div>';
   } else if (S.step === 2) {
-    h += talk('그럼 직접 확인해 보자! 이렇게 해 봐.', 'think');
-    h += '<div class="panel"><h2>' + img('ic_magnifier', '🔎', 'ic-in') + '확인하는 방법</h2><ul class="howto">' + L.howTo.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+    var sim = !!(window.BJSIM && BJSIM.has(S.lesson));
+    h += talk(sim ? '반짝이 실험실에서 직접 해 보자! 준비물은 필요 없어.' : '그럼 직접 확인해 보자! 교실을 둘러봐.', 'think');
+    h += '<div class="panel"><h2>' + img('ic_magnifier', '🔎', 'ic-in') + '확인하는 방법</h2><ul class="howto">' + (sim ? BJSIM.howTo[S.lesson] : L.howTo).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+    if (sim) h += '<div class="panel simwrap"><h2>🧪 반짝이 실험실</h2><div id="simbox"></div></div>';
     if (L.checkType === 'pick') {
       h += '<div class="panel"><h2>🔎 ' + esc(L.pickTitle) + '</h2><div class="picks">' +
         L.items.map(function (it, i) { return '<button class="pick' + (S.picked.indexOf(it.t) >= 0 ? ' on' : '') + '" data-act="pick" data-v="' + i + '"><span class="em">' + it.e + '</span>' + esc(it.t) + '</button>'; }).join('') +
@@ -199,7 +201,17 @@ function step() {
       '<div class="row c"><button class="btn big c" id="sendBtn" data-act="send">📮 반짝이에게 알려 주기</button></div>';
   }
   shell(h);
+  if (S.step === 2 && window.BJSIM && BJSIM.has(S.lesson)) BJSIM.render(S.lesson, $('simbox'), simEvent);
   if (S.step === 3) { buildSentence(); var o = $('own'); if (o) o.addEventListener('input', function () { S.own = o.value; buildSentence(); }); }
+}
+// 실험실에서 아이가 실제로 해 본 것 → '내가 확인한 것'에 자동 ✔, 시트 '확인한 것' 칸에도 남겨요.
+function simEvent(ev) {
+  var lab = BJSIM.label[ev]; if (lab && S.picked.indexOf(lab) < 0) S.picked.push(lab);
+  var i = (BJSIM.obs[S.lesson] || {})[ev];
+  if (i === undefined || S.observed.indexOf(i) >= 0) return;
+  S.observed.push(i); S.reasons = [];
+  var ob = $('obsbox'); if (ob) { ob.innerHTML = obsList(); var b = ob.querySelector('[data-v="' + i + '"]'); if (b) { b.classList.add('flash'); } }
+  toast('👀 확인했어요! ' + S.data.lessons[S.lesson].observations[i].t);
 }
 function vBtn(v, t, c) { return '<button class="btn ' + c + (S.verdict === v ? ' on' : '') + '" data-act="verdict" data-v="' + v + '">' + t + '</button>'; }
 function obsText(o, i) {

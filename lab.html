@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>반짝이 실험실</title>
+<meta name="description" content="준비물 없이 화면 안에서 해 보는 2학년 에너지 실험실 — 햇빛·바람·꺼진 TV·전기 오는 길">
+<meta name="theme-color" content="#0b0f2e">
+<link rel="icon" href="assets/ic_magnifier.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=2">
+<style>
+  .labtop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+  .labtop img{width:76px}
+  .labtabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+  .labtabs button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:18px;background:rgba(255,255,255,.07);border:2px solid var(--line);font-size:17px;line-height:1.25}
+  .labtabs button img{width:54px;height:54px;object-fit:contain}
+  .labtabs button.on{background:linear-gradient(180deg,rgba(255,216,77,.3),rgba(255,216,77,.08));border-color:var(--yellow)}
+  @media (max-width:700px){.labtabs{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div id="bg" aria-hidden="true"></div>
+<main class="solo">
+  <div class="labtop"><img src="assets/bj_think.png" alt=""><div><div class="kicker">2학년 에너지 탐정 · 준비물 없이 화면에서 직접 해 봐요</div><h1 style="font-family:var(--title);font-size:clamp(34px,5vw,52px);color:#ffe58a">🧪 반짝이 실험실</h1></div></div>
+  <div class="labtabs" id="tabs"></div>
+  <div class="panel"><h2 id="lt"></h2><ul class="howto" id="how"></ul></div>
+  <div class="panel simwrap mt" id="box"></div>
+  <p class="small center mt">이 실험실은 기록을 저장하지 않아요. 본 것은 종이 학습지의 ‘탐정 기록’에 적어요.</p>
+</main>
+<div id="toast" role="status"></div>
+<script src="js/sim.js?v=2"></script>
+<script>
+(function () {
+  var T = { 1: ['ic_plug', '미션 1', '전기는 어디에?'], 2: ['ic_sun', '미션 2', '햇빛의 힘'], 3: ['ic_wind', '미션 3', '바람의 힘'], 4: ['ic_tv', '미션 4', '꺼진 TV'], 5: ['ic_earth', '미션 5', '전기 오는 길'] };
+  var tabs = document.getElementById('tabs'), box = document.getElementById('box');
+  tabs.innerHTML = Object.keys(T).map(function (n) { return '<button data-n="' + n + '"><img src="assets/' + T[n][0] + '.png" alt="">' + T[n][1] + '<br>' + T[n][2] + '</button>'; }).join('');
+  function show(n) {
+    [].forEach.call(tabs.children, function (b) { b.classList.toggle('on', b.dataset.n === String(n)); });
+    document.getElementById('lt').textContent = '🔎 ' + T[n][1] + ' · ' + T[n][2] + ' — 확인하는 방법';
+    var how = n == 1 ? ['👀 진짜 교실을 천천히 둘러봐요', '🔌 플러그나 전선이 연결된 물건을 찾아요', '🔋 건전지가 들어간 물건도 찾아요', '⚠️ 콘센트는 눈으로만! 손대지 않아요'] : BJSIM.howTo[n];
+    document.getElementById('how').innerHTML = how.map(function (x) { return '<li>' + x + '</li>'; }).join('');
+    if (n == 1) box.innerHTML = '<div class="simsay">미션 1은 실험실이 필요 없어요. 우리 교실이 바로 실험실이에요! 찾은 물건을 학습지에 ○ 해요.</div>';
+    else { box.innerHTML = '<div id="simbox"></div>'; BJSIM.render(Number(n), document.getElementById('simbox'), function () {}); }
+    try { localStorage.setItem('bj_lab', n); } catch (e) {}
+  }
+  tabs.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) show(b.dataset.n); });
+  var start = 2; try { start = Number(localStorage.getItem('bj_lab')) || 2; } catch (e) {}
+  var q = /[?&]m=([1-5])/.exec(location.search); if (q) start = Number(q[1]);
+  show(start);
+})();
+</script>
+</body>
+</html>
