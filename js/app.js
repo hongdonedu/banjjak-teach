@@ -246,6 +246,7 @@ function buildSentence() {
 }
 function sendTeach() {
   if (!S.verdict) { toast('① 반짝이 말이 틀렸는지 맞는지 골라 주세요'); return; }
+  if (!(S.own && S.own.trim().length >= 2)) { toast('③ 내 말로 더 알려 주기를 꼭 적어 주세요 (🎤로 말해도 돼요)'); var o3 = $('own'); if (o3) { o3.focus(); o3.classList.add('need'); setTimeout(function () { o3.classList.remove('need'); }, 1200); } return; }
   if (!S.reasons.length && !(S.own && S.own.trim())) { toast('② 왜냐하면 이유를 골라 주세요'); return; }
   var opts = reasonOptions(), reasons = S.reasons.map(function (i) { return { t: opts[i].t, k: opts[i].k }; });
   S.step = 4;
