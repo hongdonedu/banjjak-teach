@@ -389,12 +389,12 @@ function cert(c) {
 
 /* ---------------- 마음 설문(구글 설문지를 이 화면 안에서) ---------------- */
 function survey(which) {
-  S.view = 'survey'; which = which || S.surveyWhich || 'pre'; S.surveyWhich = which;
+  S.view = 'survey'; which = which || S.surveyWhich || 'post'; S.surveyWhich = which;
   var f = FORMS[which];
   shell('<div class="page-h"><span class="ic e">📝</span><h1>마음 설문</h1></div>' +
     talk('이건 시험이 아니야. 정답이 없어! 선생님이 한 문제씩 읽어 주면, 내 마음과 가장 가까운 것을 눌러 줘.', 'wave') +
-    '<div class="tabs"><button class="tab' + (which === 'pre' ? ' on' : '') + '" data-act="survey" data-v="pre">① ' + FORMS.pre.t + ' (' + FORMS.pre.when + ')</button>' +
-    '<button class="tab' + (which === 'post' ? ' on' : '') + '" data-act="survey" data-v="post">② ' + FORMS.post.t + ' (' + FORMS.post.when + ')</button></div>' +
+    '<div class="tabs"><button class="tab' + (which === 'post' ? ' on' : '') + '" data-act="survey" data-v="post">⭐ ' + FORMS.post.t + ' (' + FORMS.post.when + ')</button>' +
+    '<button class="tab' + (which === 'pre' ? ' on' : '') + '" data-act="survey" data-v="pre">' + FORMS.pre.t + ' (빠진 친구만)</button></div>' +
     '<div class="formbox"><iframe src="' + f.url + '?embedded=true" title="' + esc(f.t) + '" loading="lazy">불러오는 중…</iframe></div>' +
     '<p class="small mt">화면이 안 보이면 <a href="' + f.url + '" target="_blank" rel="noopener">여기를 눌러 새 창에서 열어요 ↗</a></p>');
 }
