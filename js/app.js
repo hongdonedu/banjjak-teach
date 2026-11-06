@@ -195,7 +195,7 @@ function step() {
       var ic = o.k === 'OBS' ? '<span class="em">' + o.e + '</span>' : img(REASON_ICON[o.k][0], REASON_ICON[o.k][1], 'em');
       return '<button class="reason' + (S.reasons.indexOf(i) >= 0 ? ' on' : '') + '" data-act="reason" data-v="' + i + '">' + ic + '<span class="tx">' + esc(o.t) + '</span><span class="tag ' + o.k + '">' + TAG[o.k] + '</span></button>';
     }).join('');
-    h += '<h2 class="mt">③ 내 말로 더 알려 주기 <span class="small">(안 써도 돼요)</span></h2>' +
+    h += '<h2 class="mt">③ 내 말로 더 알려 주기 <span class="small">(꼭 적어 주세요)</span></h2>' +
       '<div class="inputrow"><input class="txt" id="own" maxlength="100" placeholder="예) 얼음이 물이 되었어" value="' + esc(S.own) + '"><button class="btn sm" data-act="mic" data-v="own" aria-label="말로 쓰기">🎤</button></div></div>' +
       '<div class="sentence" id="sent"></div>' +
       '<div class="row c"><button class="btn big c" id="sendBtn" data-act="send">📮 반짝이에게 알려 주기</button></div>';
